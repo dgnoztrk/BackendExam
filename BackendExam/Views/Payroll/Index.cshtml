@@ -1,0 +1,42 @@
+﻿@using BackendExam.Application.Shared;
+@using BackendExam.ApplicationContract.Dto;
+@model Response<IEnumerable<PayrollDto>>
+
+<table class="table table-striped table-hovered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Maaş</th>
+            <th>Çalışılan Saat</th>
+            <th>Hakediş Ücreti</th>
+            <th>Maaş Farkı</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model.Success)
+            {
+                foreach (var item in Model.Data)
+                {
+                    <tr>
+                        <td>@item.EmployeeId</td>
+                        <td>@item.Name</td>
+                        <td>@item.Surname</td>
+                        <td>@(item.Salary.ToString("C"))</td>
+                        <td>@item.CalculatedWorkTime</td>
+                        <td>@(item.CalculatedSalary.ToString("C"))</td>
+                        <td>@(Math.Abs(item.CalculatedSalary - item.Salary).ToString("C"))</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <text>
+                    @Model.ErrorMessage
+                </text>
+            }
+        }
+    </tbody>
+</table>

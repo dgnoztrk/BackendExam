@@ -1,0 +1,63 @@
+﻿@using BackendExam.Application.Shared;
+@using BackendExam.ApplicationContract.Dto;
+@model Response<IEnumerable<PayrollDto>>
+
+@{
+    if (Model.Success && Model.Data.Count() > 0)
+    {
+        PayrollDto row = Model.Data.FirstOrDefault();
+
+        <div class="container">
+            <form class="form g-3">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="label-control">Personel Adı</div>
+                        <input type="text" class="form-control" value="@row.Name @row.Surname" readonly />
+                    </div>
+                    <div class="col-6">
+                        <div class="label-control">TC</div>
+                        <input type="text" class="form-control" value="@row.IdentityNo" readonly />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="label-control">Maaş</div>
+                            <input type="text" class="form-control" value="@(row.Salary.ToString("C"))" readonly />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="label-control">Çalışma Tipi</div>
+                        <input type="text" class="form-control" value="@Extensions.GetEnumDescription(row.WorkType)" readonly />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4">
+                        <div class="label-control">Fark Ücret</div>
+                        <input type="text" class="form-control" value="@(Math.Abs(row.CalculatedSalary - row.Salary).ToString("C"))" readonly />
+                    </div>
+                    <div class="col-4">
+                        <div class="label-control">Toplam Ücret</div>
+                        <input type="text" class="form-control" value="@(row.CalculatedSalary.ToString("C"))" readonly />
+                    </div>
+                    <div class="col-4">
+                        <div class="label-control">Çalışma Süresi (Saat)</div>
+                        <input type="text" class="form-control" value="@row.CalculatedWorkTime" readonly />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <br />
+        <br />
+
+        <a class="btn btn-xs btn-primary float-end" asp-area="" asp-controller="Employee" asp-action="Index">Çalışan Listesine Dön</a>
+        <a class="btn btn-xs btn-success float-end me-1" asp-area="" asp-controller="Payroll" asp-action="Index">Bordro Listesine Dön</a>
+    }
+    else
+    {
+        <text>
+            @Model.ErrorMessage
+        </text>
+    }
+}

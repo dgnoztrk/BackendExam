@@ -1,0 +1,9 @@
+﻿@using BackendExam.ApplicationContract.Dto;
+@model EmployeeDto
+
+@{
+    if (Model != null)
+    {
+        <h1>@Model.Name @Model.Surname</h1>
+    }
+}

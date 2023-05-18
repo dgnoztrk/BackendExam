@@ -1,0 +1,36 @@
+﻿@using BackendExam.ApplicationContract.Dto;
+@{
+    List<EmployeeDto> employees = ViewBag.Employees as List<EmployeeDto>;
+}
+<div class="container">
+
+    <form method="post">
+        <div class="form-group"></div>
+        <label>Personel</label>
+        <select class="form-control" name="EmployeeId">
+            @{
+                foreach (var item in employees)
+                {
+                    <option value="@item.Id">@item.Name @item.Surname</option>
+                }
+            }
+        </select>
+        <br />
+        <div class="form-group">
+            <label>Başlangıç Tarihi</label>
+            <input class="form-control" type="datetime-local" name="StartDate" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label>Bitiş Tarihi</label>
+            <input class="form-control" type="datetime-local" name="EndDate" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label>Açıklama</label>
+            <textarea class="form-control" rows="3" name="Description"></textarea>
+        </div>
+        <br />
+        <input type="submit" class="btn btn-outline-success float-end" value="Kaydet" />
+    </form>
+</div>
